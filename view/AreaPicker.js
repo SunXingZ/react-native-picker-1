@@ -43,8 +43,25 @@ class AreaPicker extends BaseDialog {
         return { justifyContent: 'flex-end', alignItems: 'center' }
     }
 
+    initArea() {
+        let areaJson = this.props.areaJson;
+        let data = [];
+        for (let p in areaJson) {
+            let p_temp = { name: p, city: [] };
+            for (let c in areaJson[p]) {
+                let c_temp = { name: c, area: [] };
+                areaJson[p][c].map((d) => {
+                    c_temp.area.push(d);
+                });
+                p_temp.city.push(c_temp);
+            }
+            data.push(p_temp);
+        }
+        return data;
+    }
+
     getAreaData() {
-        let area = this.props.areaJson;
+        let area = this.initArea();
         let data = [];
         let len = area.length;
         for (let i = 0; i < len; i++) {
