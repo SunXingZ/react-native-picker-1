@@ -11,12 +11,13 @@ import PickerView from './PickerView';
 
 import BaseDialog from './BaseDialog';
 
+import areaJson from "../address";
+
 class AreaPicker extends BaseDialog {
 
     static defaultProps = {
         removeSubviews: false,
         selectedValue: ['香港', '香港', '中西區'],
-        areaJson: null,
         confirmText: '确定',
         confirmTextSize: 14,
         confirmTextColor: '#333333',
@@ -44,7 +45,6 @@ class AreaPicker extends BaseDialog {
     }
 
     initArea() {
-        let areaJson = this.props.areaJson;
         let data = [];
         for (let p in areaJson) {
             let p_temp = { name: p, city: [] };
