@@ -14,6 +14,7 @@ import BaseDialog from './BaseDialog';
 class SimpleItemsDialog extends BaseDialog {
 
     static defaultProps = {
+        title: "标题",
         items: ['a', 'b', 'c'],
         itemKey: 'key',
         itemStyle: {
@@ -69,6 +70,16 @@ class SimpleItemsDialog extends BaseDialog {
 
     renderContent() {
         return <View style={{ width: this.mScreenWidth, backgroundColor: '#ffffff' }}>
+            <Text style={[{ 
+                height: 44, 
+                lineHeight: 44, 
+                textAlign: "center",
+                backgroundColor: "#f6f7f9",
+                color: "#666666",
+                fontSize: 14,
+                borderBottomColor: "#fefefe",
+                borderBottomWidth: 1
+            }, this.props.titleTextStyle]}>{this.props.title}</Text>
             {this.renderItems()}
             {this.props.cancel ? this.renderCancel() : null}
         </View>
