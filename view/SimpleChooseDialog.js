@@ -46,13 +46,13 @@ class SimpleChooseDialog extends BaseDialog {
                 }}
                 key={this.key ? item[this.key] : item}
                 style={{
-                    paddingLeft: this.getSize(20), paddingRight: this.getSize(20),
+                    paddingLeft: this.getSize(10), paddingRight: this.getSize(20),
                     width: this.getSize(307), height: this.getSize(49),
                     justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'row'
                 }}>
                 <View style={{
                     width: this.props.pointSize, height: this.props.pointSize,
-                    justifyContent: 'center', alignItems: 'center', marginRight: this.getSize(20),
+                    justifyContent: 'center', alignItems: 'center', marginRight: this.getSize(10),
                     borderRadius: this.props.pointBorderRadius, borderWidth: 1,
                     borderColor: this.state.seleted == index ? this.props.selectColor : this.props.normalColor,
                 }}>
