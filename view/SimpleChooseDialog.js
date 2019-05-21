@@ -46,7 +46,7 @@ class SimpleChooseDialog extends BaseDialog {
                 }}
                 key={this.key ? item[this.key] : item}
                 style={{
-                    paddingLeft: this.getSize(10), paddingRight: this.getSize(20),
+                    paddingLeft: this.getSize(15), paddingRight: this.getSize(15),
                     width: this.getSize(307), height: this.getSize(49),
                     justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'row'
                 }}>
