@@ -24,7 +24,8 @@ class DatePicker extends BaseDialog {
         selectedValue: [new Date().getFullYear() + '年', new Date().getMonth() + 1 + '月', new Date().getDate() + '日'],
         startYear: 1990,
         endYear: new Date().getFullYear(),
-
+        showMonthOption: true,
+        showDateOption: true,
         confirmText: '确定',
         confirmTextSize: 14,
         confirmTextColor: '#333333',
@@ -47,53 +48,59 @@ class DatePicker extends BaseDialog {
 
 
     getDateList() {
-        console.log(this.props)
         let unit = this.props.unit;
         let years = [];
         let months = [];
         let days = [];
-
+        let pickerData = [];
+        let selectedIndex = [];
         let startYear = this.props.startYear;
         let endYear = this.props.endYear;
+
         for (let i = 0; i < endYear + 1 - startYear; i++) {
             years.push(i + startYear + unit[0]);
         }
+        pickerData.push(years);
 
         let selectedYear = years[0];
         if (this.props.selectedValue) {
             selectedYear = this.props.selectedValue[0];
         }
         selectedYear = selectedYear.substr(0, selectedYear.length - unit[0].length);
-        for (let i = 1; i < 13; i++) {
-            months.push(i + unit[1]);
-        }
-
-        let selectedMonth = months[0];
-        if (this.props.selectedValue) {
-            selectedMonth = this.props.selectedValue[1];
-        }
-        selectedMonth = selectedMonth.substr(0, selectedMonth.length - unit[1].length);
-
-        let dayCount = TimeUtils.getDaysInOneMonth(selectedYear, selectedMonth);
-        for (let i = 1; i <= dayCount; i++) {
-            days.push(i + unit[2]);
-        }
-
-        let selectedDay = days[0];
-        if (this.props.selectedValue) {
-            selectedDay = this.props.selectedValue[2];
-        }
-        selectedDay = selectedDay.substr(0, selectedDay.length - unit[2].length);
-
-        pickerData = [years, months, days];
-
-        selectedIndex = [
-            years.indexOf(selectedYear + unit[0]) == -1 ? years.length - 1 : years.indexOf(selectedYear + unit[0]),
-            months.indexOf(selectedMonth + unit[1]),
-            days.indexOf(selectedDay + unit[2]) == -1 ? days.length - 1 : days.indexOf(selectedDay + unit[2])];
+        selectedIndex.push(years.indexOf(selectedYear + unit[0]) == -1 ? years.length - 1 : years.indexOf(selectedYear + unit[0]));
         this.props.selectedValue[0] = years[selectedIndex[0]];
-        this.props.selectedValue[1] = months[selectedIndex[1]];
-        this.props.selectedValue[2] = days[selectedIndex[2]];
+
+        if (this.props.showMonthOption) {
+            for (let i = 1; i < 13; i++) {
+                months.push(i + unit[1]);
+            }
+            pickerData.push(months);
+
+            let selectedMonth = months[0];
+            if (this.props.selectedValue) {
+                selectedMonth = this.props.selectedValue[1];
+            }
+            selectedMonth = selectedMonth.substr(0, selectedMonth.length - unit[1].length);
+            selectedIndex.push(months.indexOf(selectedMonth + unit[1]));
+            this.props.selectedValue[1] = months[selectedIndex[1]];
+
+            if (this.props.showDateOption) {
+                let dayCount = TimeUtils.getDaysInOneMonth(selectedYear, selectedMonth);
+                for (let i = 1; i <= dayCount; i++) {
+                    days.push(i + unit[2]);
+                }
+                pickerData.push(days);
+    
+                let selectedDay = days[0];
+                if (this.props.selectedValue) {
+                    selectedDay = this.props.selectedValue[2];
+                }
+                selectedDay = selectedDay.substr(0, selectedDay.length - unit[2].length);
+                selectedIndex.push(days.indexOf(selectedDay + unit[2]) == -1 ? days.length - 1 : days.indexOf(selectedDay + unit[2]));
+                this.props.selectedValue[2] = days[selectedIndex[2]];
+            }
+        }
+
         if (this.props.HH) {
             let hours = [];
             for (let i = 0; i < 24; i++) {
@@ -133,8 +140,6 @@ class DatePicker extends BaseDialog {
                 }
             }
         }
-
-
         let data = {
             pickerData: pickerData,
             selectedIndex: selectedIndex,
