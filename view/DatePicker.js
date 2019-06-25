@@ -26,6 +26,7 @@ class DatePicker extends BaseDialog {
         endYear: new Date().getFullYear(),
         showMonthOption: true,
         showDateOption: true,
+        endMonth: 13,
         confirmText: '确定',
         confirmTextSize: 14,
         confirmTextColor: '#333333',
@@ -71,7 +72,15 @@ class DatePicker extends BaseDialog {
         this.props.selectedValue[0] = years[selectedIndex[0]];
 
         if (this.props.showMonthOption) {
-            for (let i = 1; i < 13; i++) {
+            let end = 13;
+            if (typeof this.props.endMonth == "number") {
+                let selectYear = this.props.selectedValue[0] && this.props.selectedValue[0].slice(0, this.props.selectedValue[0].length - 1);
+                let currentYear = new Date().getFullYear();
+                if (selectYear == currentYear) {
+                    end = this.props.endMonth;
+                }
+            }
+            for (let i = 1; i < end; i++) {
                 months.push(i + unit[1]);
             }
             pickerData.push(months);
